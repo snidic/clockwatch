@@ -15,7 +15,7 @@ import java.awt.geom.Point2D;
  */
 public class ClockHand implements MoveableShape {
 	private BasicStroke line;
-	private int x, y; // Origin of the hand
+	private int x, y;
 	private int length;
 	private double ang; // degrees N - 0, E - 90, S - 180, W - 360
 	private Color c;
@@ -67,6 +67,7 @@ public class ClockHand implements MoveableShape {
 
 	public void rotate(double angle) {
 		this.ang += angle;
+		// Preventing overflow
 		if (this.ang > 360)
 			this.ang -= 360;
 		if (this.ang < 0)

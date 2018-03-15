@@ -65,6 +65,7 @@ public class ClockTester {
 		Timer clockTimer = new Timer(1000, clockListener);
 
 		ActionListener stopwatchListener = (event) -> {
+			stop.update();
 			// icon2.repaint();
 		};
 		Timer stopwatchTimer = new Timer(1000, stopwatchListener);

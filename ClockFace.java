@@ -16,6 +16,27 @@ public class ClockFace extends JPanel {
 	 *            the top of the bounding rectangle
 	 * @param width
 	 *            the width of the bounding rectangle
+	 * @param scale
+	 *            the scale of the dial numbers (Default is 1)
+	 */
+	public ClockFace(int x, int y, int width, int scale) {
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.setOpaque(false);
+		this.setPreferredSize(new Dimension(width, width));
+		this.scale = scale;
+	}
+
+	/**
+	 * Constructs a Clock
+	 * 
+	 * @param x
+	 *            the left of the bounding rectangle
+	 * @param y
+	 *            the top of the bounding rectangle
+	 * @param width
+	 *            the width of the bounding rectangle
 	 */
 	public ClockFace(int x, int y, int width) {
 		this.x = x;
@@ -23,6 +44,7 @@ public class ClockFace extends JPanel {
 		this.width = width;
 		this.setOpaque(false);
 		this.setPreferredSize(new Dimension(width, width));
+		this.scale = 1;
 	}
 
 	public void translate(int dx, int dy) {
@@ -85,7 +107,7 @@ public class ClockFace extends JPanel {
 		g2.setColor(Color.RED);
 
 		for (int i = 1; i <= 12; i++) {
-			String numStr = "" + i;
+			String numStr = "" + i * scale;
 			FontMetrics fm = g2.getFontMetrics(g2.getFont());
 			int charWidth = fm.stringWidth(numStr);
 			int charHeight = fm.getHeight();
@@ -105,4 +127,5 @@ public class ClockFace extends JPanel {
 	private int x;
 	private int y;
 	private int width;
+	private int scale;
 }

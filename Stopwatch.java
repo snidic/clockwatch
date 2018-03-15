@@ -35,6 +35,13 @@ public class Stopwatch implements Icon {
 		this.width = width;
 	}
 
+	/**
+	 * Updates the outer dial hand and inner after one revolution
+	 */
+	public void update() {
+
+	}
+
 	@Override
 	public int getIconHeight() {
 		return width;
