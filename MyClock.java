@@ -24,7 +24,6 @@ public class MyClock implements Icon {
 	private ClockHand min;
 	private ClockHand sec;
 	private int width;
-	private static final double TICK_DEGREE = 6;
 
 	/**
 	 * Constructs a MyClock
@@ -45,9 +44,9 @@ public class MyClock implements Icon {
 		sec = new ClockHand(width / 2, width / 2, width / 2, 2, Color.RED);
 
 		// Setting the hands to the correct positions
-		hr.setAngle(((d.getHours() % 24) / 12.0 * 360) + d.getMinutes() * TICK_DEGREE / 12.0);
-		min.setAngle((d.getMinutes() / 60.0 * 360));
-		sec.setAngle((d.getSeconds() / 60.0 * 360));
+		hr.rotate(((d.getHours() % 24) / 12.0 * 360) + d.getMinutes() * ClockHand.TICK_DEGREE / 12.0);
+		min.rotate((d.getMinutes() / 60.0 * 360));
+		sec.rotate((d.getSeconds() / 60.0 * 360));
 		this.width = width;
 	}
 
@@ -56,10 +55,10 @@ public class MyClock implements Icon {
 	 * and hour hands
 	 */
 	public void update() {
-		sec.rotate(TICK_DEGREE);
-		if (sec.getAngle() % 360 == 0) {
-			min.rotate(TICK_DEGREE);
-			hr.rotate(TICK_DEGREE / 12.0);
+		sec.rotate(ClockHand.TICK_DEGREE);
+		if (sec.handAtZero()) {
+			min.rotate(ClockHand.TICK_DEGREE);
+			hr.rotate(ClockHand.TICK_DEGREE / 12.0);
 		}
 	}
 

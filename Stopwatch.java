@@ -13,33 +13,28 @@ import javax.swing.Icon;
 import javax.swing.JPanel;
 
 /**
- * You will need to implement a Stopwatch class that has two dials - one for
- * outer and one for inner dials (see figure below. The sample does not show the
- * hand but yours should) You may adjust the center of the two dials so that it
- * is offset as shown in figure below.
- * 
- * The Stopwatch should also use the timer and actually counts seconds. For
- * every revolution of the outer dial, the inner dial advances by one tick.
+ * A stop watch
  *
  */
 public class Stopwatch implements Icon {
 	private StopWatchDial outer;
 	private StopWatchDial inner;
-	private int x;
-	private int y;
 	private int width;
 
 	public Stopwatch(int x, int y, int width) {
-		this.x = x;
-		this.y = y;
 		this.width = width;
+		outer = new StopWatchDial(x, y, width, 5);
+		inner = new StopWatchDial(x + width / 4, y + width / 4, width / 2, 5);
 	}
 
 	/**
 	 * Updates the outer dial hand and inner after one revolution
 	 */
 	public void update() {
-
+		outer.update();
+		if (outer.handAtZero()) {
+			inner.update();
+		}
 	}
 
 	@Override
@@ -54,7 +49,8 @@ public class Stopwatch implements Icon {
 
 	@Override
 	public void paintIcon(Component c, Graphics g, int x, int y) {
-		// TODO Auto-generated method stub
-
+		Graphics2D g2 = (Graphics2D) g;
+		outer.paintComponent(g);
+		inner.paintComponent(g);
 	}
 }

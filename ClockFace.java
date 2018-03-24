@@ -47,11 +47,6 @@ public class ClockFace extends JPanel {
 		this.scale = 1;
 	}
 
-	public void translate(int dx, int dy) {
-		x += dx;
-		y += dy;
-	}
-
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		super.paintComponent(g2);

@@ -6,19 +6,16 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 
 /**
- * You will need to implement a ClockHand class that does something like the
- * following. This will be used to draw the hands - minute, second, hour etc.
- * Make ClockHand a MoveableShape and use the Timer code from Chapter 4 to move
- * it. You will need to calculate the angle to move. ClockFace can give you an
- * idea. Use the Stroke interface to change the style of the hands.
+ * A Clock hand
  *
  */
 public class ClockHand implements MoveableShape {
 	private BasicStroke line;
 	private int x, y;
 	private int length;
-	private double ang; // degrees N - 0, E - 90, S - 180, W - 360
+	private double ang; // degrees N - 0, E - 90, S - 180, W - 270
 	private Color c;
+	public static final double TICK_DEGREE = 6;
 
 	/**
 	 * Constructs a ClockHand
@@ -38,6 +35,7 @@ public class ClockHand implements MoveableShape {
 		this.x = x;
 		this.y = y;
 		this.length = length;
+		this.ang = 0;
 		this.line = new BasicStroke(width);
 		this.c = c;
 	}
@@ -55,27 +53,21 @@ public class ClockHand implements MoveableShape {
 		g2.draw(hand);
 	}
 
-	// @Override
-	// public void translate(int dx, int dy) {
-	// x += dx;
-	// y += dy;
-	// }
-
-	public void setAngle(double angle) {
-		this.ang = angle;
-	}
-
+	/**
+	 * Rotates angle by the specified amount clockwise
+	 * 
+	 * @param angle
+	 *            degrees to be rotated
+	 */
 	public void rotate(double angle) {
 		this.ang += angle;
-		// Preventing overflow
-		if (this.ang > 360)
-			this.ang -= 360;
-		if (this.ang < 0)
-			this.ang += 360;
+		// Preventing overflow of ang
+		if (this.ang > 360 || this.ang < 0)
+			this.ang %= 360;
 	}
 
-	public double getAngle() {
-		return ang;
+	public boolean handAtZero() {
+		return ang % 360 == 0;
 	}
 
 }
