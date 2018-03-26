@@ -1,12 +1,10 @@
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
 
 /**
- * A Clock hand
+ * Models a clockhand that rotates around a dial/ clock face
  *
  */
 public class ClockHand implements MoveableShape {
@@ -15,10 +13,9 @@ public class ClockHand implements MoveableShape {
 	private int length;
 	private double ang; // degrees N - 0, E - 90, S - 180, W - 270
 	private Color c;
-	public static final double TICK_DEGREE = 6;
 
 	/**
-	 * Constructs a ClockHand
+	 * Constructs a ClockHand with the given parameters
 	 * 
 	 * @param x
 	 *            Origin x
@@ -35,7 +32,6 @@ public class ClockHand implements MoveableShape {
 		this.x = x;
 		this.y = y;
 		this.length = length;
-		this.ang = 0;
 		this.line = new BasicStroke(width);
 		this.c = c;
 	}
@@ -54,20 +50,38 @@ public class ClockHand implements MoveableShape {
 	}
 
 	/**
-	 * Rotates angle by the specified amount clockwise
+	 * Sets the angle of the clock hand to the passed in value
 	 * 
 	 * @param angle
-	 *            degrees to be rotated
+	 * 		A double representing the angle to set
+	 */
+	public void setAngle(double angle) {
+		this.ang = angle;
+	}
+
+	/**
+	 * Rotates the clock hand a given amount
+	 * 
+	 * @param angle
+	 * 		The angle in degrees to rotate the clock hand by
 	 */
 	public void rotate(double angle) {
 		this.ang += angle;
-		// Preventing overflow of ang
-		if (this.ang > 360 || this.ang < 0)
-			this.ang %= 360;
+		// Preventing overflow
+		if (this.ang > 360)
+			this.ang -= 360;
+		if (this.ang < 0)
+			this.ang += 360;
 	}
 
-	public boolean handAtZero() {
-		return ang % 360 == 0;
+	/**
+	 * Gets the clock hand's current angle
+	 * 
+	 * @return
+	 * 		A double representing the current angle of the hand
+	 */
+	public double getAngle() {
+		return ang;
 	}
 
 }

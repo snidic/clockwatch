@@ -1,40 +1,51 @@
-import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.GeneralPath;
-
 import javax.swing.Icon;
-import javax.swing.JPanel;
 
 /**
- * A stop watch
- *
+ * Models a stopwatch with two dials. The inner dial keep track of the minutes
+ * pass while the outer dial tracks the seconds.
  */
 public class Stopwatch implements Icon {
-	private StopWatchDial outer;
-	private StopWatchDial inner;
-	private int width;
+	
+	// Class instance variables
+	private StopWatchDial outer;	// Outer dial modeling seconds
+	private StopWatchDial inner;	// Inner dial modeling minutes
+	private int width;	// Diameter of the stopwatch
 
+	/**
+	 * Constructs a new stopwatch at the given coordinates and width
+	 * 
+	 * @param x
+	 * 		X position of stopwatch
+	 * @param y
+	 * 		Y position of stopwatch
+	 * @param width
+	 * 		Diameter of the stopwatch
+	 */
 	public Stopwatch(int x, int y, int width) {
 		this.width = width;
-		outer = new StopWatchDial(x, y, width, 5);
-		inner = new StopWatchDial(x + width / 4, y + width / 4, width / 2, 5);
+		outer = new StopWatchDial(x, y, width);
+		inner = new StopWatchDial(x + width/4, y / 2 + 50, width / 2);
 	}
 
 	/**
 	 * Updates the outer dial hand and inner after one revolution
 	 */
 	public void update() {
-		outer.update();
-		if (outer.handAtZero()) {
-			inner.update();
+		outer.tick();
+		if (outer.getDegree() % 360 == 0) {
+			inner.tick();
 		}
+	}
+	
+	/**
+	 * Resets the stopwatch to 0
+	 */
+	public void reset() {
+		outer.reset();
+		inner.reset();
 	}
 
 	@Override
@@ -50,7 +61,7 @@ public class Stopwatch implements Icon {
 	@Override
 	public void paintIcon(Component c, Graphics g, int x, int y) {
 		Graphics2D g2 = (Graphics2D) g;
-		outer.paintComponent(g);
-		inner.paintComponent(g);
+		outer.paintComponent(g2);
+		inner.paintComponent(g2);
 	}
 }

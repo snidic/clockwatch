@@ -5,17 +5,10 @@ import java.awt.Graphics2D;
 import java.util.Date;
 
 import javax.swing.Icon;
-import javax.swing.JPanel;
 
 /**
- * You will need to implement a MyClock class that aggregates both ClockFace and
- * 3 instances of ClockHand (one each for minute, hour and second. Make sure you
- * use appropriate color and thickness for the three hands). Think about what
- * you can save in ClockHand to achieve this.
- * 
- * The clock should actually show the time. You can get the time from Date and
- * use that to position the hands. Setup a timer for 1 second but don't count
- * seconds yourself.
+ * Models a clock with a face and hands for hours, minutes, and seconds.
+ * The clock is initialized to the system time.
  *
  */
 public class MyClock implements Icon {
@@ -24,6 +17,7 @@ public class MyClock implements Icon {
 	private ClockHand min;
 	private ClockHand sec;
 	private int width;
+	public static final double TICK_DEGREE = 6;
 
 	/**
 	 * Constructs a MyClock
@@ -37,16 +31,17 @@ public class MyClock implements Icon {
 	 * @param d
 	 *            Current Date
 	 */
+	@SuppressWarnings("deprecation")
 	public MyClock(int x, int y, int width, Date d) {
 		face = new ClockFace(x, y, width);
-		hr = new ClockHand(width / 2, width / 2, width / 4, 5, Color.BLACK);
-		min = new ClockHand(width / 2, width / 2, width / 3, 5, Color.BLACK);
-		sec = new ClockHand(width / 2, width / 2, width / 2, 2, Color.RED);
+		hr = new ClockHand(width / 2, width / 2, width / 4, 6, Color.BLACK);
+		min = new ClockHand(width / 2, width / 2, (int) (width / 2.4), 5, Color.BLACK);
+		sec = new ClockHand(width / 2, width / 2, (int) (width / 2.15), 2, Color.RED);
 
 		// Setting the hands to the correct positions
-		hr.rotate(((d.getHours() % 24) / 12.0 * 360) + d.getMinutes() * ClockHand.TICK_DEGREE / 12.0);
-		min.rotate((d.getMinutes() / 60.0 * 360));
-		sec.rotate((d.getSeconds() / 60.0 * 360));
+		hr.setAngle(((d.getHours() % 24) / 12.0 * 360) + d.getMinutes() * TICK_DEGREE / 12.0);
+		min.setAngle((d.getMinutes() / 60.0 * 360));
+		sec.setAngle((d.getSeconds() / 60.0 * 360));
 		this.width = width;
 	}
 
@@ -55,10 +50,10 @@ public class MyClock implements Icon {
 	 * and hour hands
 	 */
 	public void update() {
-		sec.rotate(ClockHand.TICK_DEGREE);
-		if (sec.handAtZero()) {
-			min.rotate(ClockHand.TICK_DEGREE);
-			hr.rotate(ClockHand.TICK_DEGREE / 12.0);
+		sec.rotate(TICK_DEGREE);
+		if (sec.getAngle() % 360 == 0) {
+			min.rotate(TICK_DEGREE);
+			hr.rotate(TICK_DEGREE / 12.0);
 		}
 	}
 

@@ -10,7 +10,7 @@ import javax.swing.*;
  */
 public class ClockTester {
 	public static void main(String[] args) {
-		JFrame frame = new JFrame();
+		JFrame frame = new JFrame("Clocks");
 
 		// Creating Clock
 		MyClock myClock = new MyClock(0, 0, CLOCK_RADIUS, new Date());

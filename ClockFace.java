@@ -1,12 +1,23 @@
 import java.awt.*;
 import java.awt.geom.*;
 import javax.swing.*;
-import java.util.*;
 
 /**
- * A Clock face
+ * Models a clock face of a watch with markers 
  */
 public class ClockFace extends JPanel {
+	
+	/**
+	 * Auto-generated to remove warnings
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	// Class instances
+	private int x;
+	private int y;
+	private int width;
+	private int scale;
+	
 	/**
 	 * Constructs a Clock
 	 * 
@@ -47,6 +58,12 @@ public class ClockFace extends JPanel {
 		this.scale = 1;
 	}
 
+	/**
+	 * Paints the components into the container that called this method.
+	 * 
+	 * @param g
+	 * 		Graphics component to paint with
+	 */
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g;
 		super.paintComponent(g2);
@@ -101,6 +118,7 @@ public class ClockFace extends JPanel {
 		g2.draw(ticksPath);
 		g2.setColor(Color.RED);
 
+		// Places numbers on the clock face
 		for (int i = 1; i <= 12; i++) {
 			String numStr = "" + i * scale;
 			FontMetrics fm = g2.getFontMetrics(g2.getFont());
@@ -118,9 +136,5 @@ public class ClockFace extends JPanel {
 
 		}
 	}
-
-	private int x;
-	private int y;
-	private int width;
-	private int scale;
+	
 }
